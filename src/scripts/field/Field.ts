@@ -16,7 +16,8 @@ interface square {
 export class Field {
   paddingV: integer
   paddingH: integer
-
+  public countField:number = 0
+  public countCheckField :number = 0
   arrayField: Array<Square[]> = []
 
   constructor(
@@ -24,7 +25,8 @@ export class Field {
     cols: integer,
     rows: integer,
     public startPos: Coord,
-    public poolObj: PoolObject
+    public poolObj: PoolObject,
+
   ) {
     this.paddingH = 60
     this.paddingV = 60
@@ -43,7 +45,8 @@ export class Field {
         this.arrayField[i].push(square)
       }
     }
-    console.log(this.arrayField)
+    this.countField = cols * rows
+    console.log(this.arrayField, this.countField)
   }
 
   private clearField(isOnlyTest = true) {
@@ -62,14 +65,39 @@ export class Field {
 
   public checkSquare(this): Phaser.GameObjects.Sprite {
     const sprite: Phaser.GameObjects.Sprite = this.poolObj.getObject(this.scene.currentTurn)
+    this.countCheckField ++
     return sprite
+  }
+
+  private calculateFillField(){
+      const ratio = this.countCheckField/this.countField* 100
+        if(ratio>70){
+            console.log("more 70%")
+            this.expasionField()
+        }
+  }
+
+  private expasionField(){
+      const line:Square[] = []
+    for (let i = 0; i < this.arrayField.length; i++) {
+        const elem:Phaser.GameObjects.Sprite = this.arrayField[0][i].gameObject
+
+       const square = this.scene.add.sprite(0,0,'square').setInteractive()
+       const x = elem.x
+       const y = elem.y - elem.height
+       square.x = x
+       square.y = y
+        const sq = new Square(square, {x, y}, false, this)
+        console.log(i)
+    }
   }
 
   public endTurn() {
     this.clearField()
-    this.scene.changeTurn()
-    // setTimeout(() => {
-    //   this.scene.changeTurn()
-    // }, 1000)
+    this.calculateFillField()
+    // this.scene.changeTurn()
+    setTimeout(() => {
+      this.scene.changeTurn()
+    }, 1)
   }
 }

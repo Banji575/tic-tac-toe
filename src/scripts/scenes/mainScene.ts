@@ -23,7 +23,7 @@ export default class MainScene extends Phaser.Scene {
     const poolObject = new PoolObject(this)
     const field: Field = new Field(this, 50, 50, { x: 300, y: 300 }, poolObject)
 
-    field.createField(3, 3)
+    field.createField(5, 5)
     const ai = new AI()
     this.bot = new Bot(this, field, ai)
   }

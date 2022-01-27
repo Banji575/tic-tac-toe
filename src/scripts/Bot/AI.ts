@@ -1,3 +1,4 @@
+import { Field } from '../field/Field'
 import { Square } from '../field/Square'
 import { CurrentTurn } from '../scenes/mainScene'
 import { Utils } from '../Utils'
@@ -49,31 +50,39 @@ export class AI {
     for (let i = 0; i < field.length; i++) {
       this.lineAnalys(field[i])
     }
+    this.createVerticalLine(field)
     const result = this.dicision()
     this.resetParams()
     return result
   }
 
-  lineAnalys(line: Square[]) {
+  lineAnalys(line: Square[], isAddRansomSq: boolean = true) {
     let countFill: number = 0
     let emptySq: Square[] = []
 
     line.forEach((sq: Square) => {
       if (sq.isClick && sq.typeChecked === CurrentTurn.player) {
         countFill++
-      } else if(!sq.isClick) {
+      } else if (!sq.isClick) {
         emptySq.push(sq)
-        // const behavior: behavior = { priority: 3, gameObject: sq }
-        this.currentBehaviorTree[3].push(sq)
+        if (isAddRansomSq) {
+          this.currentBehaviorTree[3].push(sq)
+        }
       }
     })
-    if (countFill >= line.length - 1 && emptySq.length > 0) {
-      console.log('line is no one', emptySq)
-      // const behavior: behavior = { priority: 1, gameObject: emptySq[0] }
+
+    if (countFill >= line.length - 1 && (emptySq.length > 0)) {
       this.currentBehaviorTree[1].push(emptySq[0])
     }
-
     Utils.randomizerArr(this.currentBehaviorTree[3])
   }
-
+  createVerticalLine(field: Square[][]) {
+    for (let i = 0; i < field.length; i++) {
+      const line: Square[] = []
+      for (let j = 0; j < field.length; j++) {
+        line.push(field[j][i])
+      }
+      this.lineAnalys(line, false)
+    }
+  }
 }
