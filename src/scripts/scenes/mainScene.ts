@@ -12,8 +12,8 @@ export enum CurrentTurn {
 export default class MainScene extends Phaser.Scene {
   public currentTurn: CurrentTurn
   bot: Bot
-  isStopGame:boolean = false
-  ui:UI
+  isStopGame: boolean = false
+  ui: UI
 
   constructor() {
     super({ key: 'MainScene' })
@@ -28,30 +28,30 @@ export default class MainScene extends Phaser.Scene {
     field.createField(5, 5)
     const ai = new AI()
     this.bot = new Bot(this, field, ai)
-    this.ui.renderText("turn " + CurrentTurn[this.currentTurn].toString())
+    this.ui.renderText('turn ' + CurrentTurn[this.currentTurn].toString())
   }
 
   changeTurn() {
-    if(this.isStopGame) return
-    
+    if (this.isStopGame) return
+
     if (this.currentTurn === CurrentTurn.player) {
       this.currentTurn = CurrentTurn.enemy
       this.bot.turn()
     } else {
       this.currentTurn = CurrentTurn.player
     }
-    this.ui.renderText("turn " + CurrentTurn[this.currentTurn].toString())
+    this.ui.renderText('turn ' + CurrentTurn[this.currentTurn].toString())
   }
 
-  victory(){
-   //this.currentTurn = CurrentTurn.none
+  victory() {
+    //this.currentTurn = CurrentTurn.none
     this.isStopGame = true
-    this.ui.renderText( CurrentTurn[this.currentTurn].toString() + " victory")
+    this.ui.renderText(CurrentTurn[this.currentTurn].toString() + ' victory')
     this.ui.showRestartButton()
   }
-restart(){
-  this.scene.restart()
-  this.isStopGame = false
-}
+  restart() {
+    this.scene.restart()
+    this.isStopGame = false
+  }
   update() {}
 }

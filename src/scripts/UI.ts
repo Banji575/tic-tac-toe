@@ -8,7 +8,7 @@ export class UI {
   }
 
   private init() {
-    const width = this.scene.game.config.width
+    const width = Number(this.scene.game.config.width)
 
     this.text = this.scene.add.text(width / 2, 0, 'hello world', { font: '32px Arial' })
     this.text.setFill('0x0ff000')
