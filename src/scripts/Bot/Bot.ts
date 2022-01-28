@@ -9,10 +9,9 @@ export class Bot {
   public turn() {
     this.checkEmptySquare()
     //Класс AI принимает двумерный массив поля, и возвращает оптимальную для хода клетку
-    
-    const square = this.ai.fieldAnalys(this.field.getField())
-    square?.click(CurrentTurn.enemy)
-    
+
+    const result = this.ai.fieldAnalys(this.field.getField())
+    result?.click(CurrentTurn.enemy)
   }
 
   checkEmptySquare() {
@@ -20,10 +19,8 @@ export class Bot {
     field.forEach((elem: Square[]) => {
       elem.forEach((square: Square) => {
         if (!square.isClick) {
-          square.testFillColor()
         }
       })
     })
-
   }
 }

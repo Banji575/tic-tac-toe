@@ -19,7 +19,7 @@ export class Square {
   }
 
   public click(whoCheck:CurrentTurn = CurrentTurn.player) {
-    if (this.isClick) return
+    if (this.isClick || this.field.tryOnClick) return
 
     const a = this.field.checkSquare()
     a.x = this.gameObject.x
@@ -27,7 +27,6 @@ export class Square {
     this.isClick = true
     this.typeChecked = whoCheck
     this.field.endTurn()
-    console.log('click')
   }
 
   public testFillColor() {
@@ -36,6 +35,9 @@ export class Square {
   }
 
   public resetTint() {
-    this.gameObject.setTint(0xffffff)
+    setTimeout(() => {
+      this.gameObject.setTint(0xffffff)
+    }, 1000);
+    
   }
 }

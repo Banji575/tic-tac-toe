@@ -18,7 +18,7 @@ export class PoolObject {
     this.createPool('x', this.poolO)
   }
 
-  private createPool(texture: string, pool: Phaser.GameObjects.Sprite[], count = 30) {
+  private createPool(texture: string, pool: Phaser.GameObjects.Sprite[], count = 60) {
     for (let i = 0; i < count; i++) {
       const obj = this.scene.add.sprite(-100, -100, texture).setDepth(20).setScale(0.2)
       pool.push(obj)

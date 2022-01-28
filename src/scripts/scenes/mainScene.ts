@@ -1,5 +1,3 @@
-import PhaserLogo from '../objects/phaserLogo'
-import FpsText from '../objects/fpsText'
 import { Field } from '../field/Field'
 import { PoolObject } from '../PoolObject/PoolObject'
 import { Bot } from '../Bot/Bot'
@@ -7,11 +5,12 @@ import { AI } from '../Bot/AI'
 
 export enum CurrentTurn {
   player,
-  enemy
+  enemy,
 }
 export default class MainScene extends Phaser.Scene {
   public currentTurn: CurrentTurn
   bot: Bot
+  isStopGame:boolean = false
 
   constructor() {
     super({ key: 'MainScene' })
@@ -35,6 +34,12 @@ export default class MainScene extends Phaser.Scene {
     } else {
       this.currentTurn = CurrentTurn.player
     }
+  }
+
+  victory(actor:CurrentTurn){
+   //this.currentTurn = CurrentTurn.none
+    console.log('victory main', actor)
+    this.isStopGame = true
   }
 
   update() {}
