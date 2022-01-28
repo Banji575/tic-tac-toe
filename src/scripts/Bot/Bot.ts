@@ -1,4 +1,4 @@
-import { Field } from '../field/Field'
+            import { Field } from '../field/Field'
 import { Square } from '../field/Square'
 import MainScene, { CurrentTurn } from '../scenes/mainScene'
 import { AI } from './AI'
@@ -11,7 +11,10 @@ export class Bot {
     //Класс AI принимает двумерный массив поля, и возвращает оптимальную для хода клетку
 
     const result = this.ai.fieldAnalys(this.field.getField())
-    result?.click(CurrentTurn.enemy)
+    setTimeout(() => {
+      result?.click(CurrentTurn.enemy)
+    }, 800);
+    
   }
 
   checkEmptySquare() {

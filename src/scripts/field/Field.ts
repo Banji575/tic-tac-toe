@@ -10,11 +10,13 @@ export interface Coord {
 export class Field {
   paddingV: integer
   paddingH: integer
-  public countField: number = 0
-  public countCheckField: number = 0
+  countField: number = 0
+  countCheckField: number = 0
   arrayField: Array<Square[]> = []
   countExtends: number = 3
   currentExtends: number = 0
+
+
   constructor(
     public scene: MainScene,
     cols: integer,
@@ -26,8 +28,11 @@ export class Field {
     this.paddingV = 60
   }
 
-  public get tryOnClick(): boolean {
-    return this.scene.isStopGame
+  public tryOnClick(target: CurrentTurn): boolean {
+    let res = false
+    res = this.scene.isStopGame
+    res = this.scene.currentTurn !== target
+    return res
   }
 
   createField(cols, rows) {
@@ -75,7 +80,7 @@ export class Field {
 
   private expasionField() {
     if (this.scene.currentTurn === CurrentTurn.enemy) return
-    if(this.currentExtends === this.countExtends) return;
+    if (this.currentExtends === this.countExtends) return
     const lineH: Square[] = []
     for (let i = 0; i < this.arrayField.length; i++) {
       const elem: Phaser.GameObjects.Sprite = this.arrayField[0][i].gameObject
@@ -101,7 +106,7 @@ export class Field {
       this.arrayField[i].push(sq)
       this.countField++
     }
-    this.currentExtends ++
+    this.currentExtends++
   }
 
   private checkEndGame() {
@@ -128,27 +133,27 @@ export class Field {
         for (let t = 0; t < this.arrayField.length; t++) {
           this.arrayField[i][t].testFillColor()
         }
-        this.scene.victory(CurrentTurn.enemy)
+        this.scene.victory()
         return
       }
       if (verLineE === this.arrayField.length) {
         for (let t = 0; t < this.arrayField.length; t++) {
           this.arrayField[t][i].testFillColor()
         }
-        this.scene.victory(CurrentTurn.enemy)
+        this.scene.victory()
         return
       }
       if (horLineP === this.arrayField.length) {
         for (let t = 0; t < this.arrayField.length; t++) {
           this.arrayField[i][t].testFillColor()
-          this.scene.victory(CurrentTurn.player)
+          this.scene.victory()
           return
         }
       }
       if (verLineP === this.arrayField.length) {
         for (let t = 0; t < this.arrayField.length; t++) {
           this.arrayField[t][i].testFillColor()
-          this.scene.victory(CurrentTurn.player)
+          this.scene.victory()
           return
         }
       }
@@ -157,20 +162,18 @@ export class Field {
       horLineP = 0
       verLineP = 0
     }
+    if(this.countField === this.countCheckField){
+      this.scene.currentTurn = CurrentTurn.none
+      this.scene.victory()
+    }
+
   }
 
   public endTurn() {
-    //Проверяем на заполненность линий только в ход игрока, боту сообщит AI, что линия заполнена
-    // if (this.scene.currentTurn === CurrentTurn.player) {
-    //   this.checkEndGame()
-    // }
     this.checkEndGame()
     this.clearField()
     this.calculateFillField()
 
-    // this.scene.changeTurn()
-    setTimeout(() => {
-      this.scene.changeTurn()
-    }, 1)
+    this.scene.changeTurn()
   }
 }

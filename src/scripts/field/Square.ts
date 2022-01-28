@@ -19,7 +19,7 @@ export class Square {
   }
 
   public click(whoCheck:CurrentTurn = CurrentTurn.player) {
-    if (this.isClick || this.field.tryOnClick) return
+    if (this.isClick || this.field.tryOnClick(whoCheck) ) return
 
     const a = this.field.checkSquare()
     a.x = this.gameObject.x
