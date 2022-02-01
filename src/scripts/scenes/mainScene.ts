@@ -23,7 +23,7 @@ export default class MainScene extends Phaser.Scene {
     this.currentTurn = CurrentTurn.player
     this.ui = new UI(this)
     const poolObject = new PoolObject(this)
-    const field: Field = new Field(this, 50, 50, { x:360-((64*5)/2-32) , y: this.game.config.height/2 - (((64*5)/2-32))  }, poolObject)
+    const field: Field = new Field(this, 50, 50, { x:360-((64*5)/2-32) , y: Number(this.game.config.height/2) - (((64*5)/2-32))   }, poolObject)
 
     field.createField(5, 5)
     const ai = new AI()
