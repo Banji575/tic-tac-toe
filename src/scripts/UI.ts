@@ -11,7 +11,7 @@ export class UI {
     const width = Number(this.scene.game.config.width)
 
     this.text = this.scene.add.text(width / 2, 0, 'hello world', { font: '32px Arial' })
-    this.text.setFill('0x0ff000')
+    this.text.setTintFill(0xffd300).setOrigin(0.5,-0.5)
 
     this.button = this.scene.add.sprite(width/2, 0 + this.text.height, 'restart').setOrigin(0).setInteractive().setVisible(false).setDepth(30)
     this.button.on('pointerdown', this.onClick,this)

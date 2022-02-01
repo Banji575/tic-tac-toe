@@ -13,7 +13,7 @@ export class Field {
   countField: number = 0
   countCheckField: number = 0
   arrayField: Array<Square[]> = []
-  countExtends: number = 3
+  countExtends: number = 2
   currentExtends: number = 0
 
 
@@ -24,8 +24,8 @@ export class Field {
     public startPos: Coord,
     public poolObj: PoolObject
   ) {
-    this.paddingH = 60
-    this.paddingV = 60
+    this.paddingH = 64
+    this.paddingV = 64
   }
 
   public tryOnClick(target: CurrentTurn): boolean {
@@ -44,6 +44,7 @@ export class Field {
           this.startPos.y + i * this.paddingV,
           'square'
         )
+        squareGO.setAlpha(0.4)
         const square = new Square(squareGO, { x: squareGO.x, y: squareGO.y }, false, this)
         this.arrayField[i].push(square)
       }
@@ -67,6 +68,13 @@ export class Field {
 
   public checkSquare(this): Phaser.GameObjects.Sprite {
     const sprite: Phaser.GameObjects.Sprite = this.poolObj.getObject(this.scene.currentTurn)
+    // sprite.play('Xa')
+    if(this.scene.currentTurn === CurrentTurn.enemy){
+        sprite.play('Xa')
+    }else{
+      sprite.play('Oa')
+    }
+    
     this.countCheckField++
     return sprite
   }
@@ -85,7 +93,8 @@ export class Field {
     for (let i = 0; i < this.arrayField.length; i++) {
       const elem: Phaser.GameObjects.Sprite = this.arrayField[0][i].gameObject
 
-      const square = this.scene.add.sprite(0, 0, 'square').setInteractive()
+      const square = this.scene.add.sprite(0, 0, 'square').setInteractive().setAlpha(0.4)
+
       const x = elem.x
       const y = elem.y - elem.height
       square.x = x
@@ -97,7 +106,7 @@ export class Field {
     this.arrayField.unshift(lineH)
     for (let i = 0; i < this.arrayField.length; i++) {
       const elem: Phaser.GameObjects.Sprite = this.arrayField[i][this.arrayField[i].length - 1].gameObject
-      const square = this.scene.add.sprite(0, 0, 'square').setInteractive()
+      const square = this.scene.add.sprite(0, 0, 'square').setInteractive().setAlpha(0.4)
       const x = elem.x + elem.width
       const y = elem.y
       square.x = x

@@ -2,12 +2,12 @@ import 'phaser'
 import MainScene from './scenes/mainScene'
 import PreloadScene from './scenes/preloadScene'
 
-const DEFAULT_WIDTH = 1280
-const DEFAULT_HEIGHT = 720
+const DEFAULT_WIDTH = 720
+const DEFAULT_HEIGHT = 1280
 
 const config = {
   type: Phaser.AUTO,
-  backgroundColor: '#ffffff',
+  backgroundColor:'#042A3D',
   scale: {
     parent: 'phaser-game',
     mode: Phaser.Scale.FIT,
